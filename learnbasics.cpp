@@ -1,103 +1,196 @@
 #include <iostream>
-#include <string>
-#include <ctime>
 using namespace std;
-
-char getuserchoice()
+void bord(char *spaces)
 {
-    char player;
+    cout << "\n";
+    cout << "    |      |    " << '\n';
+    cout << "" << spaces[0] << "   |  " << spaces[1] << "   |  " << spaces[2] << "   " << '\n';
+
+    cout << "____|______|_____" << endl;
+    cout << "    |      |     " << endl;
+    cout << "" << spaces[3] << "   |  " << spaces[4] << "   |  " << spaces[5] << "   " << '\n';
+    cout << "____|______|_____" << endl;
+    cout << "    |      |   " << endl;
+    cout << "" << spaces[6] << "   |  " << spaces[7] << "   |  " << spaces[8] << "   " << '\n';
+    cout << "    |      |    " << endl;
+    cout << "\n";
+}
+void user(char *spaces, char player)
+{
+    int choise;
     do
     {
-        cout << "Choose rock, paper, or scissors:" << endl;
-        cout << "r: for rock" << endl;
-        cout << "p: for paper" << endl;
-        cout << "s: for scissors" << endl;
-        cin >> player;
-
-    } while (player != 'r' && player != 'p' && player != 's');
-    return player;
+        cout << "Enter your choise from 1 to 9" << endl;
+        cin >> choise;
+        choise--;
+        if (spaces[choise] == ' ')
+        {
+            spaces[choise] = player;
+            break;
+        }
+    } while (!choise > 0 || !choise < 8);
 }
-
-char getchoicecomputer()
+void computere(char *spaces, char computer)
 {
+    int choise;
     srand(time(0));
-    int number = rand() % 3 + 1;
-    switch (number)
+    while (true)
     {
-    case 1:
-        return 'r';
-    case 2:
-        return 'p';
-    case 3:
-        return 's';
-    default:
-        return 'r';
+        choise = rand() % 9;
+        if (spaces[choise] == ' ')
+        {
+            spaces[choise] = computer;
+            break;
+        }
     }
 }
-char winer(char player, char computer)
+
+bool checkwinner(char *spaces, char player, char computer)
 {
-    switch (player)
+    if (spaces[0] != ' ' && spaces[0] == spaces[1] && spaces[1] == spaces[2])
     {
-    case 'r':
-        if (computer == 'r')
+        if (spaces[0] == player)
         {
-            cout << "It's a tie!" << endl;
+            cout << "Player wins" << endl;
         }
-        else if (computer == 'p')
+        else
         {
-            cout << "Computer wins!" << endl;
+            cout << "Computer wins" << endl;
         }
-        else if (computer == 's')
-        {
-            cout << "Player wins!" << endl;
-        }
-        break;
-    case 'p':
-        if (computer == 'p')
-        {
-            cout << "It's a tie!" << endl;
-        }
-        else if (computer == 's')
-        {
-            cout << "Computer wins!" << endl;
-        }
-        else if (computer == 'r')
-        {
-            cout << "Player wins!" << endl;
-        }
-        break;
-    case 's':
-        if (computer == 's')
-        {
-            cout << "It's a tie!" << endl;
-        }
-        else if (computer == 'r')
-        {
-            cout << "Computer wins!" << endl;
-        }
-        else if (computer == 'p')
-        {
-            cout << "Player wins!" << endl;
-        }
-        break;
-
-    default:
-        break;
     }
-}
+    else if (spaces[3] != ' ' && spaces[3] == spaces[4] && spaces[4] == spaces[5])
+    {
+        if (spaces[3] == player)
+        {
+            cout << "Player wins" << endl;
+        }
+        else
+        {
+            cout << "Computer wins" << endl;
+        }
+    }
+    else if (spaces[6] != ' ' && spaces[6] == spaces[7] && spaces[7] == spaces[8])
+    {
+        if (spaces[6] == player)
+        {
+            cout << "Player wins" << endl;
+        }
+        else
+        {
+            cout << "Computer wins" << endl;
+        }
+    }
+    else if (spaces[0] != ' ' && spaces[0] == spaces[3] && spaces[3] == spaces[6])
+    {
+        if (spaces[0] == player)
+        {
+            cout << "Player wins" << endl;
+        }
+        else
+        {
+            cout << "Computer wins" << endl;
+        }
+    }
+    else if (spaces[1] != ' ' && spaces[1] == spaces[4] && spaces[4] == spaces[7])
+    {
+        if (spaces[1] == player)
+        {
+            cout << "Player wins" << endl;
+        }
+        else
+        {
+            cout << "Computer wins" << endl;
+        }
+    }
+    else if (spaces[2] != ' ' && spaces[2] == spaces[5] && spaces[5] == spaces[8])
+    {
+        if (spaces[2] == player)
+        {
+            cout << "Player wins" << endl;
+        }
+        else
+        {
+            cout << "Computer wins" << endl;
+        }
+    }
+    else if (spaces[0] != ' ' && spaces[0] == spaces[4] && spaces[4] == spaces[8])
+    {
+        if (spaces[0] == player)
+        {
+            cout << "Player wins" << endl;
+        }
+        else
+        {
+            cout << "Computer wins" << endl;
+        }
+    }
+    else if (spaces[2] != ' ' && spaces[2] == spaces[4] && spaces[4] == spaces[6])
+    {
+        if (spaces[2] == player)
+        {
+            cout << "Player wins" << endl;
+        }
+        else
+        {
+            cout << "Computer wins" << endl;
+        }
+    }
+    else
+    {
 
+        return false;
+    }
+    return true;
+}
+bool checktie(char *spaces)
+{
+    for (int i = 0; i < 9; i++)
+    {
+        if (spaces[i] == ' ')
+        {
+            return false;
+        }
+    }
+    cout << "Game is tie" << endl;
+    return true;
+}
 int main()
 {
-    char player;
-    char computer;
-    cout << "Game of Rock, Paper, Scissors" << endl;
-    player = getuserchoice();
-    computer = getchoicecomputer();
-    cout << "Player chose: " << player << endl;
-    cout << "Computer chose: " << computer << endl;
-    winer(player, computer);
+    char player = 'X';
+    char computer = 'O';
+    bool running = true;
+    char spaces[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+    cout << "Welcome to Tic Tac Toe Game" << endl;
+    bord(spaces);
+    while (running)
+    {
+        user(spaces, player);
 
-    // Game logic to determine the winner can be added here
+        bord(spaces);
+        if (checkwinner(spaces, player, computer))
+        {
+            running = false;
+            break;
+        }
+        else if (checktie(spaces))
+        {
+            running = false;
+            break;
+        }
+        computere(spaces, computer);
+        bord(spaces);
+        if (checkwinner(spaces, player, computer))
+        {
+            running = false;
+            break;
+        }
+        else if (checktie(spaces))
+        {
+            running = false;
+            break;
+        }
+        }
+    cout << "Game Over" << endl;
 
     return 0;
 }
