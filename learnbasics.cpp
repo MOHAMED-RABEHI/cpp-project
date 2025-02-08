@@ -189,7 +189,7 @@ int main()
             running = false;
             break;
         }
-        }
+    }
     cout << "Game Over" << endl;
 
     return 0;
